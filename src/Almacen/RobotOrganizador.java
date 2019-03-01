@@ -44,6 +44,7 @@ public class RobotOrganizador implements Runnable{
         int r = this.codigo;
         int x=0;
         int y=0;
+        while(robot.frontIsClear()){
         this.robot.move();
         if(num>=1&&num<=4){
             y=3;
@@ -117,6 +118,7 @@ public class RobotOrganizador implements Runnable{
         this.robot.move();
         while(this.robot.getDirection()!=Direction.SOUTH){
             this.robot.turnLeft();
+        }
         }
     }
     
@@ -215,7 +217,7 @@ public class RobotOrganizador implements Runnable{
 
     @Override
     public void run() {
-        
+       this.transportarEstante(4);
     }
     
 }

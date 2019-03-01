@@ -52,11 +52,6 @@ public class GUI extends Application implements Runnable {
         System.out.println("Prueba");
     }
     
-    @Override
-    public void init() throws Exception{
-        super.init();
-    }
-    
     public GUI(){
         
     }

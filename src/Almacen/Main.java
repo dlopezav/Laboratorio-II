@@ -16,14 +16,13 @@ public class Main{
         
         Empleado empleado = new Empleado("",1);
         Bodega compania = new Bodega(empleado);
-        /*int opcion = 0;
-        while(true){
-            
-            switch(opcion){
-              
-            }
-            
-        }*/
+        
+            Thread[] hilos = new Thread[20];
+        for(int i=0;i<compania.getRobotsOrganizadores().length;i++){
+            hilos[i]= new Thread(compania.getRobotsOrganizadores()[i]);
+            hilos[i].start();
+        }
+        
     }
 
     
