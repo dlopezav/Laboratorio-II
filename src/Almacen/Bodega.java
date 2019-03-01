@@ -16,6 +16,8 @@ public class Bodega {
 
     public Bodega(Empleado encargado) {
         this.espacio = new City();
+        this.espacio.setSize(850, 610);
+        this.espacio.setFrameTitle("Simulación Amazon");
         // Estantes
         String label = "";
         int cont = 0;
