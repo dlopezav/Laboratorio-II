@@ -21,15 +21,24 @@ public class Main{
         
         Thread[] hilos = new Thread[compania.getRobotsOrganizadores().length];
         for(int i=0;i<compania.getRobotsOrganizadores().length;i++){
+            //if(i!=1 && i!=9 && i!=5) continue;
             hilos[i]= new Thread(compania.getRobotsOrganizadores()[i]);
             hilos[i].start();
         }
+        
         for(;;){
-            for(int i=0;i<10;i++){
-                System.out.println("Robot :"+compania.getRobotsOrganizadores()[i].getCodigo()+" En posición "+compania.getRobotsOrganizadores()[i].getRobot().getAvenue()+":"+compania.getRobotsOrganizadores()[i].getRobot().getStreet());
+            for (RobotOrganizador robotsOrganizadore : compania.getRobotsOrganizadores()) {
+                if (robotsOrganizadore.FrenteLimpio() && robotsOrganizadore.isSuspender()) {
+                    robotsOrganizadore.reanudar();
+                    System.out.println("prueba");
+                }
+                if (!robotsOrganizadore.FrenteLimpio()) {
+                    robotsOrganizadore.suspender();
+                    System.out.println("prueba2");
+                }
             }
         }
+        
+        
     }
-
-    
 }
