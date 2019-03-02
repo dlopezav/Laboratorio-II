@@ -6,7 +6,7 @@ package Almacen;
  * @version 1.0
  */
 public class Main{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, ArrayIndexOutOfBoundsException {
         GUI interfaz = new GUI(args);
         Thread ventanaInterfaz = new Thread(interfaz);
         ventanaInterfaz.start();
@@ -25,18 +25,24 @@ public class Main{
             hilos[i]= new Thread(compania.getRobotsOrganizadores()[i]);
             hilos[i].start();
         }
-        
-        for(;;){
-            for (RobotOrganizador robotsOrganizadore : compania.getRobotsOrganizadores()) {
-                if (robotsOrganizadore.FrenteLimpio() && robotsOrganizadore.isSuspender()) {
-                    robotsOrganizadore.reanudar();
-                    System.out.println("prueba");
+        try{
+            /*for(;;){
+                for (RobotOrganizador robotsOrganizador : compania.getRobotsOrganizadores()) {
+                    if (robotsOrganizador.FrenteLimpio() && robotsOrganizador.isSuspender()) {
+                        robotsOrganizador.reanudar();
+                        System.out.println("Reanudar");
+                    
+                    }
+                    if (!robotsOrganizador.FrenteLimpio()) {
+                        robotsOrganizador.suspender();
+                        System.out.println("Suspender");
+
+                    }
                 }
-                if (!robotsOrganizadore.FrenteLimpio()) {
-                    robotsOrganizadore.suspender();
-                    System.out.println("prueba2");
-                }
-            }
+            }*/
+            
+        }catch(ArrayIndexOutOfBoundsException e){
+            
         }
         
         

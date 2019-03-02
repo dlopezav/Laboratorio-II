@@ -3,8 +3,6 @@ package Almacen;
 
 import becker.robots.Direction;
 import becker.robots.Robot;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * 
@@ -69,7 +67,7 @@ public class RobotOrganizador implements Runnable{
         int x=0;
         int y=0;
         
-        //while(!this.FrenteLimpio()){}
+        while(!this.FrenteLimpio()){Thread.yield();}
         this.robot.move();
 
         if(num>=1&&num<=4){
@@ -102,7 +100,7 @@ public class RobotOrganizador implements Runnable{
         if(r<x){
             this.robot.turnLeft();
             while(this.robot.getAvenue()!=x){
-                while(!this.FrenteLimpio()){}
+        while(!this.FrenteLimpio()){Thread.yield();}
                 this.robot.move();
             }
         }else if(r>x){
@@ -110,7 +108,7 @@ public class RobotOrganizador implements Runnable{
             this.robot.turnLeft();
             this.robot.turnLeft();
             while(this.robot.getAvenue()!=x){
-                while(!this.FrenteLimpio()){}
+        while(!this.FrenteLimpio()){Thread.yield();}
                 this.robot.move();
             }
         }
@@ -120,7 +118,7 @@ public class RobotOrganizador implements Runnable{
         }
         
         while(this.robot.getStreet()!=y){
-            while(!this.FrenteLimpio()){}
+        while(!this.FrenteLimpio()){Thread.yield();}
             this.robot.move();
         }
         if(this.robot.canPickThing()){
@@ -132,7 +130,7 @@ public class RobotOrganizador implements Runnable{
         }
         
         while(this.robot.getAvenue()!=10){
-            //while(!this.FrenteLimpio()){}
+        while(!this.FrenteLimpio()){Thread.yield();}
             this.robot.move();
         }
         
@@ -141,25 +139,20 @@ public class RobotOrganizador implements Runnable{
         }
         
         while(this.robot.getStreet()!=8){
-            //while(!this.FrenteLimpio()){}
+        while(!this.FrenteLimpio()){Thread.yield();}
             this.robot.move();
         }
         this.robot.putThing();
         
         this.robot.turnLeft();
         
-        //while(!this.FrenteLimpio()){}
+        while(!this.FrenteLimpio()){Thread.yield();}
         this.robot.move();
         
         this.robot.turnLeft();
         
-        //while(!this.FrenteLimpio()){}
+        while(!this.FrenteLimpio()){Thread.yield();}
         this.robot.move();
-        synchronized (this){
-            while(suspender){
-                wait();
-            }
-        }
         
     }
     
@@ -298,7 +291,7 @@ public class RobotOrganizador implements Runnable{
         return true;
     }
     
-    public synchronized void suspender(){
+    public synchronized void suspender() throws InterruptedException{
         this.suspender = true;
     }
     
