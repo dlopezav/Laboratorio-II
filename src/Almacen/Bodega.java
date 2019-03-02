@@ -1,7 +1,11 @@
 
 package Almacen;
 
-import becker.robots.*;
+import becker.robots.City;
+import becker.robots.Direction;
+import becker.robots.Robot;
+import becker.robots.Thing;
+import becker.robots.Wall;
 import java.awt.Color;
 
 /**
@@ -19,7 +23,7 @@ public class Bodega {
         this.espacio.setSize(850, 610);
         this.espacio.setFrameTitle("Simulación Amazon");
         // Estantes
-        String label = "";
+        String label;
         int cont = 0;
         Color color = new Color(83, 87, 115);
         this.estantes = new Estante[20];

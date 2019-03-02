@@ -121,7 +121,7 @@ public class Sistema {
                     posR = robotLibre();
                     this.setEstadoRobot(true, posR);
                     this.robots[posR].setEstanteAsignado(estanteAsignado);
-                    this.robots[posR].transportarEstante(estanteAsignado.getNumero());
+                    //this.robots[posR].transportarEstante(estanteAsignado.getNumero());
                     this.robots[posR].volverAParquedero(estanteAsignado.getNumero());
                     flag = true;
                     break;

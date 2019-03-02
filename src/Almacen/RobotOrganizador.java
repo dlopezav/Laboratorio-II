@@ -12,7 +12,8 @@ public class RobotOrganizador implements Runnable{
     private int codigo;
     private Estante estanteAsignado;
     private Boolean ocupado;
-    private Robot robot;
+    private final Robot robot;
+    private RobotOrganizador[] robots;
 
     public RobotOrganizador(int codigo, Robot robot) {
         this.codigo = codigo;
@@ -20,6 +21,15 @@ public class RobotOrganizador implements Runnable{
         this.ocupado = false;
     }
 
+    public RobotOrganizador[] getRobots() {
+        return robots;
+    }
+
+    public void setRobots(RobotOrganizador[] robots) {
+        this.robots = robots;
+    }
+
+    
     public int getCodigo() {
         return codigo;
     }
@@ -40,14 +50,17 @@ public class RobotOrganizador implements Runnable{
         return robot;
     }
     
-    public void transportarEstante(int num){
+    public void transportarEstante(int num, RobotOrganizador[] robots){
         int r = this.codigo;
         int x=0;
         int y=0;
-        while(robot.frontIsClear()){
-        this.robot.move();
-        if(num>=1&&num<=4){
-            y=3;
+        while(this.FrenteLimpio(robots)){
+            if(this.FrenteLimpio(robots)==false){
+                System.out.println("Prueba :VV");
+            }
+            this.robot.move();
+            if(num>=1&&num<=4){
+                y=3;
         }else if(num>=5&&num<=8){
             y=4;
         }else if(num>=9&&num<=12){
@@ -94,7 +107,9 @@ public class RobotOrganizador implements Runnable{
         while(this.robot.getStreet()!=y){
             this.robot.move();
         }
-        this.robot.pickThing();
+        if(this.robot.canPickThing()){
+            this.robot.pickThing();
+        }
         
         while(this.robot.getDirection()!=Direction.EAST){
             this.robot.turnLeft();
@@ -155,7 +170,9 @@ public class RobotOrganizador implements Runnable{
             this.robot.turnLeft();
         }
         this.robot.move();
-        this.robot.pickThing();
+        if(this.robot.canPickThing()){
+            this.robot.pickThing();
+        }
         while(this.robot.getDirection()!=Direction.NORTH){
             this.robot.turnLeft();
         }
@@ -217,7 +234,35 @@ public class RobotOrganizador implements Runnable{
 
     @Override
     public void run() {
-       this.transportarEstante(4);
+       this.transportarEstante((int)(Math.random()*20),getRobots());
+    }
+    
+    public boolean FrenteLimpio(RobotOrganizador[] robots){
+        for(RobotOrganizador r: robots){
+            switch (this.robot.getDirection()) {
+                case NORTH:
+                    if(this.robot.getAvenue()==r.getRobot().getAvenue() && this.robot.getStreet()-1==r.getRobot().getStreet()){
+                        return false;
+                    }
+                    break;
+                case EAST:
+                    if(this.robot.getAvenue()+1==r.getRobot().getAvenue() && this.robot.getStreet()==r.getRobot().getStreet()){
+                        return false;
+                    }
+                    break;
+                case SOUTH:
+                    if(this.robot.getAvenue()==r.getRobot().getAvenue() && this.robot.getStreet()+1==r.getRobot().getStreet()){
+                        return false;
+                    }
+                    break;
+                case WEST:
+                    if(this.robot.getAvenue()-1==r.getRobot().getAvenue() && this.robot.getStreet()==r.getRobot().getStreet()){
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return true;
     }
     
 }
