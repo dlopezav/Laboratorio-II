@@ -2,6 +2,7 @@ package Almacen;
 
 import becker.robots.Direction;
 import becker.robots.Robot;
+import becker.robots.Thing;
 
 /**
  *
@@ -15,12 +16,14 @@ public class RobotOrganizador implements Runnable {
     private final Robot robot;
     private RobotOrganizador[] robots;
     private boolean suspender;
+    private Empleado empleado;
 
-    public RobotOrganizador(int codigo, Robot robot) {
+    public RobotOrganizador(int codigo, Robot robot, Empleado empleado) {
         this.codigo = codigo;
         this.robot = robot;
         this.ocupado = false;
         this.suspender = false;
+        this.empleado = empleado;
     }
 
     public boolean isSuspender() {
@@ -68,6 +71,7 @@ public class RobotOrganizador implements Runnable {
             Thread.yield();
         }
         this.robot.move();
+
 
         if (num >= 1 && num <= 4) {
             y = 3;
@@ -151,21 +155,19 @@ public class RobotOrganizador implements Runnable {
             }
             this.robot.move();
         }
-        //this.robot.putThing();
+        this.robot.putThing();
+        this.empleado.setOcupado(true);
 
+        this.robot.turnLeft();
+        this.robot.turnLeft();
         this.robot.turnLeft();
 
         while (!this.FrenteLimpio()) {
             Thread.yield();
         }
         this.robot.move();
-
         this.robot.turnLeft();
-
-        while (!this.FrenteLimpio()) {
-            Thread.yield();
-        }
-        this.robot.move();
+        this.robot.turnLeft();
 
     }
 
@@ -198,13 +200,17 @@ public class RobotOrganizador implements Runnable {
                 x = 4;
                 break;
         }
-        /*while(this.robot.getDirection()!=Direction.EAST){
-            this.robot.turnLeft();
-        }*/
-        //this.robot.move();
+        while (!this.FrenteLimpio()) {
+            Thread.yield();
+        }
+        this.robot.move();
         if (this.robot.canPickThing()) {
             this.robot.pickThing();
         }
+        while (!this.FrenteLimpio()) {
+            Thread.yield();
+        }
+        this.robot.move();
         while (this.robot.getDirection() != Direction.NORTH) {
             this.robot.turnLeft();
         }
@@ -223,7 +229,7 @@ public class RobotOrganizador implements Runnable {
             }
             this.robot.move();
         }
-        //this.robot.putThing();
+        this.robot.putThing();
         while (this.robot.getDirection() != Direction.NORTH) {
             this.robot.turnLeft();
         }
@@ -249,6 +255,10 @@ public class RobotOrganizador implements Runnable {
                 Thread.yield();
             }
             this.robot.move();
+            while (!this.FrenteLimpio()) {
+                Thread.yield();
+            }
+            this.robot.move();
             while (this.robot.getDirection() != Direction.NORTH) {
                 this.robot.turnLeft();
             }
@@ -267,11 +277,21 @@ public class RobotOrganizador implements Runnable {
                 Thread.yield();
             }
             this.robot.move();
+            while (!this.FrenteLimpio()) {
+                Thread.yield();
+            }
+            this.robot.move();
             while (this.robot.getDirection() != Direction.NORTH) {
                 this.robot.turnLeft();
             }
+        } else if (r == x) {
+            while (this.robot.getStreet() != 0) {
+                while (!this.FrenteLimpio()) {
+                    Thread.yield();
+                }
+                this.robot.move();
+            }
         }
-
         while (this.robot.getDirection() != Direction.SOUTH) {
             this.robot.turnLeft();
         }
@@ -289,6 +309,7 @@ public class RobotOrganizador implements Runnable {
     public void run() {
         try {
             this.transportarEstante(this.codigo);
+            this.empleado.ponerProducto(new Producto("", 0.0));
             this.volverAParquedero(this.codigo);
         } catch (InterruptedException ex) {
 
@@ -343,19 +364,12 @@ public class RobotOrganizador implements Runnable {
                     }
                 }
             }
+            if(this.robot.getAvenue()==10 && this.robot.getStreet()==7 && this.empleado.isOcupado() ){
+                return false;
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.getMessage();
         }
         return true;
     }
-
-    public synchronized void suspender() throws InterruptedException {
-        this.suspender = true;
-    }
-
-    public synchronized void reanudar() {
-        this.suspender = false;
-        notify();
-    }
-
 }

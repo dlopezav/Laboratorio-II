@@ -1,5 +1,7 @@
 package Almacen;
 
+import java.util.ArrayList;
+
 /**
  *
  * @version 1.0
@@ -20,31 +22,19 @@ public class Main {
 
         Thread[] hilos = new Thread[compania.getRobotsOrganizadores().length];
         for (int i = 0; i < compania.getRobotsOrganizadores().length; i++) {
-            if (i != 1 /*&& i!=9 && i!=5*/) {
-                continue;
+            if (i != 9 && i!=4 && i!=3 && i!=7) {
+               continue;
             }
             hilos[i] = new Thread(compania.getRobotsOrganizadores()[i]);
             hilos[i].start();
+            //boolean empacarPedido = empleado.empacarPedido(new Pedido(new Cliente("José", "Desaparecido", 1), new Producto("Sopa do macaco", 999999)), 1);
         }
-        try {
-            /*for(;;){
-                for (RobotOrganizador robotsOrganizador : compania.getRobotsOrganizadores()) {
-                    if (robotsOrganizador.FrenteLimpio() && robotsOrganizador.isSuspender()) {
-                        robotsOrganizador.reanudar();
-                        System.out.println("Reanudar");
-                    
-                    }
-                    if (!robotsOrganizador.FrenteLimpio()) {
-                        robotsOrganizador.suspender();
-                        System.out.println("Suspender");
-
-                    }
-                }
-            }*/
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-
-        }
-
+        
+        ArrayList<Integer> a = new ArrayList<>();
+        a.forEach((b) -> {
+            b =0;
+        });
+        
+        
     }
 }

@@ -20,7 +20,7 @@ public class GUI extends Application implements Runnable {
     public GUI(String[] args) {
         this.args = args;
     }
-
+    
     @Override
     public void start(Stage primaryStage) {
 
@@ -40,8 +40,7 @@ public class GUI extends Application implements Runnable {
         labelTitle[1] = new Label("Solicitar Pedido.");
         labelTitle[2] = new Label("Generar Factura.");
         for(Label label:labelTitle){
-            label.setFont(new Font(15));
-            label.setStyle("-fx-font-weight: bold");
+            label.setFont(new Font(20));
             
         }
 

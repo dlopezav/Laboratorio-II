@@ -15,6 +15,7 @@ public class Computador {
         this.sistema = sistema;
     }
 
+    
     public Thing getPc() {
         return pc;
     }

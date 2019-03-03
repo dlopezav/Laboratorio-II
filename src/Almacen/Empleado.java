@@ -1,24 +1,34 @@
-
 package Almacen;
 
+import becker.robots.Direction;
 import becker.robots.Robot;
 
-
 /**
- * 
+ *
  * @version 1.0
  */
 public class Empleado {
+
     private String nombre;
     private int id;
     private Robot robot;
     private Computador computador;
+    private boolean ocupado;
 
     public Empleado(String nombre, int id) {
         this.nombre = nombre;
         this.id = id;
+        this.ocupado = false;
     }
 
+    public boolean isOcupado() {
+        return ocupado;
+    }
+
+    public void setOcupado(boolean ocupado) {
+        this.ocupado = ocupado;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -50,12 +60,12 @@ public class Empleado {
     public void setComputador(Computador computador) {
         this.computador = computador;
     }
-    
-    public boolean guardarProductos(Producto[] productos){
+
+    public boolean guardarProductos(Producto[] productos) {
         return this.computador.getSistema().almacenarProductos(productos);
     }
-    
-    public boolean empacarPedido(Pedido pedido, int a){
+
+    public boolean empacarPedido(Pedido pedido, int a) {
         this.robot.move();
         this.robot.putThing();
         this.robot.turnLeft();
@@ -64,6 +74,42 @@ public class Empleado {
         this.robot.turnLeft();
         this.robot.turnLeft();
         return this.computador.getSistema().empacarPedido(pedido, a);
+    }
+
+    public boolean ponerProducto(Producto producto) throws InterruptedException {
+        this.robot.move();
+        this.robot.pickThing();
+        while (this.robot.getDirection() != Direction.SOUTH) {
+            this.robot.turnLeft();
+        }
+        this.robot.move();
+        while (this.robot.getDirection() != Direction.NORTH) {
+            this.robot.turnLeft();
+        }
+        this.robot.setLabel("SETTING");
+        //Falta :VVVVVVVVVVVVV
+        this.robot.examineThings().forEach((b) ->{
+           
+               
+           
+        });
+            
+            
+        
+        Thread.sleep((long) (1000/this.robot.getSpeed()));
+        this.robot.setLabel("");
+        this.robot.move();
+        this.robot.putThing();
+        while (this.robot.getDirection() != Direction.SOUTH) {
+            this.robot.turnLeft();
+        }
+        this.robot.move();
+        while (this.robot.getDirection() != Direction.NORTH) {
+            this.robot.turnLeft();
+        }
+        
+        this.setOcupado(false);
+        return true;
     }
 
 }

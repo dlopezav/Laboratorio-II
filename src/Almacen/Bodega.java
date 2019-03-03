@@ -57,11 +57,11 @@ public class Bodega {
         this.robotsOrganizadores = new RobotOrganizador[10];
         //Zona de parqueo
         for (int i = 0; i < this.robotsOrganizadores.length; i++) {
-            Wall wall = new Wall(espacio, 1, (i+1), Direction.NORTH);
+            Wall wall = new Wall(espacio, 0, (i+1), Direction.NORTH);
         }
         for (int i = 0; i < this.robotsOrganizadores.length; i++) {
-            Wall wall = new Wall(espacio, 1, (i+1), Direction.WEST);
-            Wall wall2 = new Wall(espacio, 1, (i+1), Direction.EAST);
+            Wall wall = new Wall(espacio, 0, (i+1), Direction.WEST);
+            Wall wall2 = new Wall(espacio, 0, (i+1), Direction.EAST);
         }
         
         // Robots organizadores
@@ -69,10 +69,10 @@ public class Bodega {
         Color colorR = new Color(255, 131, 28);
         for (int i = 0; i < this.robotsOrganizadores.length; i++) {
             label2 = "R" + (i+1);
-            Robot robot = new Robot(espacio, 1, (i+1), Direction.SOUTH);
+            Robot robot = new Robot(espacio, 0, (i+1), Direction.SOUTH);
             robot.setLabel(label2);
             robot.setColor(colorR);
-            this.robotsOrganizadores[i] = new RobotOrganizador(i+1, robot);
+            this.robotsOrganizadores[i] = new RobotOrganizador(i+1, robot,this.encargado);
         }
         // Zona empleado
         Wall wallE = new Wall(espacio, 9, 9, Direction.WEST);

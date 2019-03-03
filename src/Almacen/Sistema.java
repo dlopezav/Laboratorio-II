@@ -132,78 +132,7 @@ public class Sistema {
     }
     
     public boolean empacarPedido(Pedido pedido, int a){
-        Caja caja = new Caja(0);
-        for (int i = 0; i < pedido.getProductos().size(); i++) {
-            caja.setProducto(pedido.getProductos().get(i));
-        }
-        int x = this.robots[a-1].getRobot().getStreet();
-        int y = this.robots[a-1].getRobot().getAvenue();
-        this.robots[a-1].getRobot().move();
-        if(y<10){
-            this.robots[a-1].getRobot().turnLeft();
-            while(this.robots[a-1].getRobot().getAvenue()<10){
-                this.robots[a-1].getRobot().move();
-            }
-            for(int i=0;i<3;i++){
-                this.robots[a-1].getRobot().turnLeft();
-            }
-        }
-        while(this.robots[a-1].getRobot().getStreet()<8){
-            this.robots[a-1].getRobot().move();
-        }
-        this.robots[a-1].getRobot().pickThing();
-        for(int i=0;i<2;i++){
-            this.robots[a-1].getRobot().turnLeft();
-            this.robots[a-1].getRobot().move();
-        }
-        for(int i=0;i<3;i++){
-            this.robots[a-1].getRobot().turnLeft();
-        }
-        this.robots[a-1].getRobot().move();
-        this.robots[a-1].getRobot().turnLeft();
-        int pos = 0;
-        while(!this.robots[a-1].getRobot().canPickThing()&&this.robots[a-1].getRobot().frontIsClear()){
-            this.robots[a-1].getRobot().move();
-            pos++;
-        }
-        if(this.robots[a-1].getRobot().canPickThing()){
-            for(int i=0;i<2;i++){
-                this.robots[a-1].getRobot().turnLeft();
-            }
-            this.robots[a-1].getRobot().move();
-            pos -= 1;
-        }
-        this.robots[a-1].getRobot().putThing();
-        while(this.robots[a-1].getRobot().getDirection() != Direction.SOUTH){
-            this.robots[a-1].getRobot().turnLeft();
-        }
-        for(int i=0;i<pos;i++){
-            this.robots[a-1].getRobot().move();
-        }
-        for(int i=0;i<3;i++){
-            this.robots[a-1].getRobot().turnLeft();
-        }
-        this.robots[a-1].getRobot().move();
-        this.robots[a-1].getRobot().move();
-        for(int i=0;i<3;i++){
-            this.robots[a-1].getRobot().turnLeft();
-        }
-        while(this.robots[a-1].getRobot().getStreet()>x+1){
-            this.robots[a-1].getRobot().move();
-        }
-        if(this.robots[a-1].getRobot().getAvenue() != y){
-            this.robots[a-1].getRobot().turnLeft();
-            while(this.robots[a-1].getRobot().getAvenue()>y){
-                this.robots[a-1].getRobot().move();
-            }
-            for(int i=0;i<3;i++){
-                this.robots[a-1].getRobot().turnLeft();
-            }
-        }
-        this.robots[a-1].getRobot().move();
-        for(int i=0;i<2;i++){
-            this.robots[a-1].getRobot().turnLeft();
-        }
+        
         return true;
     }
 }
