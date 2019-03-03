@@ -28,13 +28,7 @@ public class Main {
             hilos[i] = new Thread(compania.getRobotsOrganizadores()[i]);
             hilos[i].start();
             //boolean empacarPedido = empleado.empacarPedido(new Pedido(new Cliente("José", "Desaparecido", 1), new Producto("Sopa do macaco", 999999)), 1);
-        }
-        
-        ArrayList<Integer> a = new ArrayList<>();
-        a.forEach((b) -> {
-            b =0;
-        });
-        
+        }       
         
     }
 }
