@@ -29,7 +29,7 @@ public class Empleado {
     public void setOcupado(boolean ocupado) {
         this.ocupado = ocupado;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -87,17 +87,10 @@ public class Empleado {
         while (this.robot.getDirection() != Direction.NORTH) {
             this.robot.turnLeft();
         }
-        this.robot.setLabel("SETTING");
-        //Falta :VVVVVVVVVVVVV
-        this.robot.examineThings().forEach((b) ->{
-           
-               
-           
-        });
-            
-            
-        
-        Thread.sleep((long) (1000/this.robot.getSpeed()));
+        this.robot.setLabel("PUTTING");
+        //Falta            
+
+        Thread.sleep((long) (1000 / this.robot.getSpeed()));
         this.robot.setLabel("");
         this.robot.move();
         this.robot.putThing();
@@ -108,7 +101,7 @@ public class Empleado {
         while (this.robot.getDirection() != Direction.NORTH) {
             this.robot.turnLeft();
         }
-        
+
         this.setOcupado(false);
         return true;
     }

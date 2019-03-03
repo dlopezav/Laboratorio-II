@@ -88,13 +88,12 @@ public class Sistema {
     }
     
     public int robotLibre(){
-        int res = 0;
-        for (int i = 0; i < this.estadoRobots.length; i++) {
-            if (this.estadoRobots[i] == false) {
-                res = i;
+        for(RobotOrganizador r:robots){
+            if(!r.isOcupado()){
+                return r.getCodigo();
             }
         }
-        return res;
+        return 0;
     }
     
     public int[] tiposProductos(Producto[] productos){

@@ -2,6 +2,7 @@ package Almacen;
 
 import becker.robots.Direction;
 import becker.robots.Robot;
+
 /**
  *
  * @version 1.0
@@ -16,14 +17,19 @@ public class RobotOrganizador implements Runnable {
     private boolean suspender;
     private final Empleado empleado;
 
-    public RobotOrganizador(int codigo, Robot robot, Empleado empleado) {
+    public RobotOrganizador(int codigo, Robot robot, Empleado empleado, RobotOrganizador[] robots) {
         this.codigo = codigo;
         this.robot = robot;
         this.ocupado = false;
         this.suspender = false;
         this.empleado = empleado;
+        this.robots = robots;
     }
 
+    public boolean isOcupado(){
+        return this.ocupado;
+    }
+    
     public boolean isSuspender() {
         return suspender;
     }
@@ -61,6 +67,7 @@ public class RobotOrganizador implements Runnable {
     }
 
     public void transportarEstante(int num) throws InterruptedException {
+        this.ocupado = true;
         int r = this.codigo;
         int x = 0;
         int y = 0;
@@ -69,7 +76,6 @@ public class RobotOrganizador implements Runnable {
             Thread.yield();
         }
         this.robot.move();
-
 
         if (num >= 1 && num <= 4) {
             y = 3;
@@ -166,7 +172,7 @@ public class RobotOrganizador implements Runnable {
         this.robot.move();
         this.robot.turnLeft();
         this.robot.turnLeft();
-
+        this.ocupado = false;
     }
 
     public void volverAParquedero(int num) {
@@ -362,7 +368,7 @@ public class RobotOrganizador implements Runnable {
                     }
                 }
             }
-            if(this.robot.getAvenue()==10 && this.robot.getStreet()==7 && this.empleado.isOcupado() ){
+            if (this.robot.getAvenue() == 10 && this.robot.getStreet() == 7 && this.empleado.isOcupado()) {
                 return false;
             }
         } catch (ArrayIndexOutOfBoundsException e) {

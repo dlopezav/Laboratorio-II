@@ -73,7 +73,7 @@ public class Bodega {
             Robot robot = new Robot(espacio, 0, (i+1), Direction.SOUTH);
             robot.setLabel(label2);
             robot.setColor(colorR);
-            this.robotsOrganizadores[i] = new RobotOrganizador(i+1, robot,this.encargado);
+            this.robotsOrganizadores[i] = new RobotOrganizador(i+1, robot,this.encargado, this.robotsOrganizadores);
         }
         // Zona empleado
         Wall wallE = new Wall(espacio, 9, 9, Direction.WEST);
