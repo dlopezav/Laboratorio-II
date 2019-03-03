@@ -19,6 +19,7 @@ public class Empleado {
         this.nombre = nombre;
         this.id = id;
         this.ocupado = false;
+        //this.computador = new Computador(new Sistema(robots, estantesBodega));
     }
 
     public boolean isOcupado() {

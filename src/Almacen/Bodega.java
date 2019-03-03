@@ -17,6 +17,7 @@ public class Bodega {
     private Estante[] estantes;
     private RobotOrganizador[] robotsOrganizadores;
     private Empleado encargado;
+    private Sistema sistema;
 
     public Bodega(Empleado encargado) {
         this.espacio = new City();
@@ -92,17 +93,28 @@ public class Bodega {
         }
         wallZE = new Wall(espacio, 7, 12, Direction.SOUTH);
         //Thing y = new Thing(espacio, 3, 12);
+        thingPC();
+        this.sistema = new Sistema(robotsOrganizadores, estantes);
     }
     
-    public void thingPC(){
+    public final void thingPC(){
         //Computador empleado
         Thing pc = new Thing(espacio, 9, 9);
         pc.getIcon().setLabel("PC");
         pc.getIcon().setColor(Color.GRAY);
-        this.encargado.getComputador().setPc(pc);
         //this.encargado.getComputador().setPc(pc);
     }
 
+    public Sistema getSistema() {
+        return sistema;
+    }
+
+    public void setSistema(Sistema sistema) {
+        this.sistema = sistema;
+    }
+
+    
+    
     public Estante[] getEstantes() {
         return estantes;
     }

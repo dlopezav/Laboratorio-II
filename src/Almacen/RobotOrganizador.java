@@ -2,8 +2,6 @@ package Almacen;
 
 import becker.robots.Direction;
 import becker.robots.Robot;
-import becker.robots.Thing;
-
 /**
  *
  * @version 1.0
@@ -16,7 +14,7 @@ public class RobotOrganizador implements Runnable {
     private final Robot robot;
     private RobotOrganizador[] robots;
     private boolean suspender;
-    private Empleado empleado;
+    private final Empleado empleado;
 
     public RobotOrganizador(int codigo, Robot robot, Empleado empleado) {
         this.codigo = codigo;

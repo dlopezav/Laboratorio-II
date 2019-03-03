@@ -1,7 +1,6 @@
 
 package Almacen;
 
-import becker.robots.Direction;
 import java.util.ArrayList;
 
 /**
@@ -135,4 +134,9 @@ public class Sistema {
         
         return true;
     }
+    
+    public void LlevarEstante(int num, int estante) throws InterruptedException{
+        this.robots[num].transportarEstante(estante);
+    }
+    
 }

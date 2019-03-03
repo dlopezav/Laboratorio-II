@@ -1,7 +1,13 @@
 package Almacen;
 
 import com.sun.javafx.collections.ElementObservableListDecorator;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 
 import javafx.geometry.Insets;
@@ -22,10 +28,15 @@ import javafx.stage.Stage;
 
 public class GUI extends Application implements Runnable {
 
-    private String[] args;
+    public static String[] args;
+    public static Bodega compania;
 
-    public GUI(String[] args) {
-        this.args = args;
+    public GUI(String[] args, Bodega compania) {
+        GUI.args = args;
+        GUI.compania = compania;
+        if (compania == null) {
+            System.out.println("Prueba Constructor1");
+        }
     }
 
     @Override
@@ -75,36 +86,85 @@ public class GUI extends Application implements Runnable {
         Label labelCaja = new Label("Caja: ");
         gridPanes[0].add(labelCaja, 1, 5, 1, 1);
         GridPane.setHalignment(labelCaja, HPos.CENTER);
-        Spinner seleccionEstantes = new Spinner();
 
-        gridPanes[0].add(seleccionEstantes, 0, 6, 1, 1);
-        GridPane.setHalignment(seleccionEstantes, HPos.CENTER);
-        SpinnerValueFactory<Integer> sv = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 7, 1);
-        SpinnerValueFactory<String> sv1 = new SpinnerValueFactory<String>() {
+        List<Integer> valuesSpinner = new ArrayList<Integer>();
+        for (int i = 1; i <= 20; i++) {
+            valuesSpinner.add(i);
+        }
+
+        Spinner<Integer> seleccionEstantes = new Spinner<Integer>();
+        SpinnerValueFactory<Integer> sv = new SpinnerValueFactory<Integer>() {
             @Override
             public void decrement(int steps) {
-                System.out.println("Bajando");
+                Integer current = this.getValue();
+                int dx = valuesSpinner.indexOf(current);
+                int newidx = (valuesSpinner.size() + dx - steps) % valuesSpinner.size();
+                Integer newInt = valuesSpinner.get(newidx);
+                this.setValue(newInt);
             }
 
             @Override
             public void increment(int steps) {
-                System.out.println("Subiendo");
+                Integer current = this.getValue();
+                int dx = valuesSpinner.indexOf(current);
+                int newidx = (dx + steps) % valuesSpinner.size();
+                Integer newInt = valuesSpinner.get(newidx);
+                this.setValue(newInt);
             }
         };
-        seleccionEstantes.setValueFactory(sv1);
-        seleccionEstantes.setOnMouseClicked((event) -> {
-            System.out.println("Prueba Spinner");
-        });
-        Spinner seleccionCaja = new Spinner();
-        gridPanes[0].add(seleccionCaja, 1, 6, 1, 1);
+        sv.setValue(1);
+        seleccionEstantes.setValueFactory(sv);
+        seleccionEstantes.valueProperty().addListener((ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) -> {
+            //for (int a : valuesSpinner) {
+            //cambiar spinner cajas
+            //}
 
+        });
+
+        gridPanes[0].add(seleccionEstantes, 0, 6, 1, 1);
+        GridPane.setHalignment(seleccionEstantes, HPos.CENTER);
+
+        List<Integer> valuesSpinner1 = new ArrayList<Integer>();
+        for (int i = 1; i <= 3; i++) {
+            valuesSpinner1.add(i);
+        }
+        Spinner<Integer> seleccionCaja = new Spinner<Integer>();
+        SpinnerValueFactory<Integer> sv1 = new SpinnerValueFactory<Integer>() {
+            @Override
+            public void decrement(int steps) {
+                Integer current = this.getValue();
+                int dx = valuesSpinner1.indexOf(current);
+                int newidx = (valuesSpinner1.size() + dx - steps) % valuesSpinner1.size();
+                Integer newInt = valuesSpinner1.get(newidx);
+                this.setValue(newInt);
+            }
+
+            @Override
+            public void increment(int steps) {
+                Integer current = this.getValue();
+                int dx = valuesSpinner1.indexOf(current);
+                int newidx = (dx + steps) % valuesSpinner1.size();
+                Integer newInt = valuesSpinner1.get(newidx);
+                this.setValue(newInt);
+            }
+        };
+        sv1.setValue(1);
+        seleccionCaja.setValueFactory(sv1);
+
+        gridPanes[0].add(seleccionCaja, 1, 6, 1, 1);
         GridPane.setHalignment(seleccionCaja, HPos.CENTER);
         Button buttonAlmacenar = new Button("Almacenar");
         gridPanes[0].add(buttonAlmacenar, 0, 9, 2, 1);
         GridPane.setHalignment(buttonAlmacenar, HPos.CENTER);
         buttonAlmacenar.setOnAction(((event) -> {
+
+            Producto producto = new Producto(nombreProducto.getText(), Double.parseDouble(precioProducto.getText()));
+            Thread thread = new Thread(this.compania.getRobotsOrganizadores()[seleccionEstantes.getValue()-1]);
+            thread.start();
+
             //codigo Almacenar
             System.out.println("Almacenar");
+
         }));
 
         for (int i = 0; i < 3; i++) {
@@ -125,6 +185,11 @@ public class GUI extends Application implements Runnable {
     public void run() {
         Application.launch(args);
         System.exit(0);
+    }
+
+    @Override
+    public void init() {
+
     }
 
     public GUI() {
