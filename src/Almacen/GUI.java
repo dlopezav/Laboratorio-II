@@ -157,8 +157,10 @@ public class GUI extends Application implements Runnable {
 
         gridPanes[1].add(new Label("Estante:"), 0, 1);
         Spinner estantes = new Spinner();
+        
         gridPanes[1].add(estantes, 1, 1);
         gridPanes[1].add(new Label("Caja:"), 0, 2);
+        
         Spinner cajas = new Spinner();
         gridPanes[1].add(cajas, 1, 2);
 
@@ -184,14 +186,15 @@ public class GUI extends Application implements Runnable {
         gridPanes[0].add(buttonAlmacenar, 0, 9, 2, 1);
         GridPane.setHalignment(buttonAlmacenar, HPos.CENTER);
         buttonAlmacenar.setOnAction(((event) -> {
+            
+            Producto producto = new Producto(nombreProducto.getText(), Double.parseDouble(precioProducto.getText()));
+            compania.setProducto(producto, seleccionCaja.getValue(), seleccionEstantes.getValue());
             valuesSpinner.clear();
             for (int i = 0; i < 20; i++) {
                 if (!GUI.compania.getEstantes()[i].isLleno()) {
                     valuesSpinner.add(i + 1);
                 }
             }
-            Producto producto = new Producto(nombreProducto.getText(), Double.parseDouble(precioProducto.getText()));
-            GUI.compania.setProducto(producto, seleccionCaja.getValue(), seleccionEstantes.getValue());
             Thread thread = new Thread(GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre() - 1]);
             thread.start();
             //Actualizar Spinner Estantes
