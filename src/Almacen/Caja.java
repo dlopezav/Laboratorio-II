@@ -37,4 +37,13 @@ public class Caja {
         }
         return flag;
     }
+
+    public boolean isLleno() {
+        for (Producto p : productosGuardados) {
+            if (p == null) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

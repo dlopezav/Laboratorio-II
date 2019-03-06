@@ -57,4 +57,13 @@ public class Estante {
         return res;
     }
 
+    public boolean isLleno() {
+        for (Caja a : cajas) {
+            if (!a.isLleno()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

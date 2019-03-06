@@ -35,7 +35,7 @@ public class GUI extends Application implements Runnable {
     public void start(Stage primaryStage) {
 
         TabPane tabPane = new TabPane();
-        
+
         Tab[] tabs = new Tab[3];
         tabs[0] = new Tab("Almacenar producto");
         tabs[1] = new Tab("Solicitar Pedido");
@@ -50,7 +50,7 @@ public class GUI extends Application implements Runnable {
         labelTitle[0] = new Label("Almacenar Producto.");
         labelTitle[1] = new Label("Solicitar Pedido.");
         labelTitle[2] = new Label("Generar Factura.");
-        
+
         for (Label label : labelTitle) {
             label.setFont(new Font(20));
 
@@ -88,6 +88,10 @@ public class GUI extends Application implements Runnable {
         }
 
         Spinner<Integer> seleccionEstantes = new Spinner<>();
+        List<Integer> valuesSpinner1 = new ArrayList<>();
+        for (int i = 1; i <= 3; i++) {
+            valuesSpinner1.add(i);
+        }
         SpinnerValueFactory<Integer> sv = new SpinnerValueFactory<Integer>() {
             @Override
             public void decrement(int steps) {
@@ -96,6 +100,12 @@ public class GUI extends Application implements Runnable {
                 int newidx = (valuesSpinner.size() + dx - steps) % valuesSpinner.size();
                 Integer newInt = valuesSpinner.get(newidx);
                 this.setValue(newInt);
+                valuesSpinner1.clear();
+                for (int i = 0; i < 3; i++) {
+                    if (!GUI.compania.getEstantes()[seleccionEstantes.getValue()-1].getCajas()[i].isLleno()) {
+                        valuesSpinner1.add(i + 1);
+                    }
+                }
             }
 
             @Override
@@ -105,6 +115,12 @@ public class GUI extends Application implements Runnable {
                 int newidx = (dx + steps) % valuesSpinner.size();
                 Integer newInt = valuesSpinner.get(newidx);
                 this.setValue(newInt);
+                valuesSpinner1.clear();
+                for (int i = 0; i < 3; i++) {
+                    if (!GUI.compania.getEstantes()[seleccionEstantes.getValue()-1].getCajas()[i].isLleno()) {
+                        valuesSpinner1.add(i + 1);
+                    }
+                }
             }
         };
         sv.setValue(1);
@@ -113,7 +129,6 @@ public class GUI extends Application implements Runnable {
         gridPanes[0].add(seleccionEstantes, 0, 6, 1, 1);
         GridPane.setHalignment(seleccionEstantes, HPos.CENTER);
 
-        List<Integer> valuesSpinner1 = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
             valuesSpinner1.add(i);
         }
@@ -148,7 +163,7 @@ public class GUI extends Application implements Runnable {
         buttonAlmacenar.setOnAction(((event) -> {
 
             Producto producto = new Producto(nombreProducto.getText(), Double.parseDouble(precioProducto.getText()));
-            Thread thread = new Thread(GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre()-1]);
+            Thread thread = new Thread(GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre() - 1]);
             thread.start();
 
             //codigo Almacenar
@@ -158,11 +173,10 @@ public class GUI extends Application implements Runnable {
         }));
 
         seleccionEstantes.valueProperty().addListener((ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) -> {
-            
-            //Actualizar Spinner Cajas
 
+            //Actualizar Spinner Cajas
         });
-        
+
         for (int i = 0; i < 3; i++) {
             tabs[i].setContent(gridPanes[i]);
         }
