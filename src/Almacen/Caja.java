@@ -7,7 +7,7 @@ package Almacen;
  */
 public class Caja {
     private int numero;
-    private Producto[] productosGuardados;
+    private final Producto[] productosGuardados;
 
     public Caja(int numero) {
         this.numero = numero;
