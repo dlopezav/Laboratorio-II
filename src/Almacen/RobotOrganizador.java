@@ -144,7 +144,7 @@ public class RobotOrganizador implements Runnable {
 
         while (this.robot.getAvenue() != 10) {
             while (!this.FrenteLimpio()) {
-                Thread.yield();
+                Thread.sleep(1);
             }
             this.robot.move();
         }

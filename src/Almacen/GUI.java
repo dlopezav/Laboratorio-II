@@ -155,9 +155,36 @@ public class GUI extends Application implements Runnable {
         sv1.setValue(1);
         seleccionCaja.setValueFactory(sv1);
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         gridPanes[1].add(new Label("Estante:"), 0, 1);
-        Spinner estantes = new Spinner();
+        Spinner<Integer> estantes = new Spinner();
+        List <Integer> valueSpinne1 = new ArrayList<>();
+        for(int i=1;i<=20;i++){
+            valueSpinne1.add(i);
+        }
+        SpinnerValueFactory<Integer> s1 = new SpinnerValueFactory<Integer>() {
+            @Override
+            public void decrement(int steps) {
+                Integer current = this.getValue();
+                int dx = valueSpinne1.indexOf(current);
+                int newidx = (valueSpinne1.size() + dx - steps) % valueSpinne1.size();
+                Integer newInt = valueSpinne1.get(newidx);
+                this.setValue(newInt);
+            }
 
+            @Override
+            public void increment(int steps) {
+                Integer current = this.getValue();
+                int dx = valueSpinne1.indexOf(current);
+                int newidx = (dx + steps) % valueSpinne1.size();
+                Integer newInt = valueSpinne1.get(newidx);
+                this.setValue(newInt);
+            }
+        };
+        s1.setValue(1);
+        estantes.setValueFactory(s1);
+        
+        
         gridPanes[1].add(estantes, 1, 1);
         gridPanes[1].add(new Label("Caja:"), 0, 2);
 
@@ -175,16 +202,30 @@ public class GUI extends Application implements Runnable {
         Button buttonPedido = new Button("Solicitar");
         gridPanes[1].add(buttonPedido, 0, 5);
 
+        
+        
+            
+        
+        
         buttonPedido.setOnAction(((event) -> {
-            //codigo Pedido
-            System.out.println("Pedido");
-
+            
+            
+            
+            
+            
+            
         }));
+        
+        
+        
         gridPanes[0].add(seleccionCaja, 1, 6, 1, 1);
         GridPane.setHalignment(seleccionCaja, HPos.CENTER);
         Button buttonAlmacenar = new Button("Almacenar");
         gridPanes[0].add(buttonAlmacenar, 0, 9, 2, 1);
         GridPane.setHalignment(buttonAlmacenar, HPos.CENTER);
+        
+        
+        ////////BOTON ALMACENAR////////
         buttonAlmacenar.setOnAction(((event) -> {
 
             Producto producto = new Producto(nombreProducto.getText(), Double.parseDouble(precioProducto.getText()));
@@ -202,6 +243,13 @@ public class GUI extends Application implements Runnable {
                     valuesSpinner1.add(i + 1);
                 }
             }
+            sv.setValue(valueSpinne1.get(0));
+            for (int i = 0; i < 20; i++) {
+                if (!GUI.compania.getEstantes()[i].isLleno()) {
+                    valueSpinne1.add(i + 1);
+                }
+            }
+            sv.setValue(valuesSpinner.get(0));
             sv1.setValue(valuesSpinner1.get(0));
             Thread thread = new Thread(GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre() - 1]);
             thread.start();
