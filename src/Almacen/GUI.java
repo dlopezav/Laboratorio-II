@@ -102,7 +102,7 @@ public class GUI extends Application implements Runnable {
                 this.setValue(newInt);
                 valuesSpinner1.clear();
                 for (int i = 0; i < 3; i++) {
-                    if (!GUI.compania.getEstantes()[seleccionEstantes.getValue()-1].getCajas()[i].isLleno()) {
+                    if (!GUI.compania.getEstantes()[seleccionEstantes.getValue() - 1].getCajas()[i].isLleno()) {
                         valuesSpinner1.add(i + 1);
                     }
                 }
@@ -117,7 +117,7 @@ public class GUI extends Application implements Runnable {
                 this.setValue(newInt);
                 valuesSpinner1.clear();
                 for (int i = 0; i < 3; i++) {
-                    if (!GUI.compania.getEstantes()[seleccionEstantes.getValue()-1].getCajas()[i].isLleno()) {
+                    if (!GUI.compania.getEstantes()[seleccionEstantes.getValue() - 1].getCajas()[i].isLleno()) {
                         valuesSpinner1.add(i + 1);
                     }
                 }
@@ -155,20 +155,47 @@ public class GUI extends Application implements Runnable {
         sv1.setValue(1);
         seleccionCaja.setValueFactory(sv1);
 
+        gridPanes[1].add(new Label("Estante:"), 0, 1);
+        Spinner estantes = new Spinner();
+        gridPanes[1].add(estantes, 1, 1);
+        gridPanes[1].add(new Label("Caja:"), 0, 2);
+        Spinner cajas = new Spinner();
+        gridPanes[1].add(cajas, 1, 2);
+
+        gridPanes[1].add(new Label("Producto:"), 0, 3);
+        Spinner productos = new Spinner();
+        gridPanes[1].add(productos, 1, 3);
+
+        gridPanes[1].add(new Label("Cantidad:"), 0, 4);
+        Spinner cantidad = new Spinner();
+        gridPanes[1].add(cantidad, 1, 4);
+
+        Button buttonPedido = new Button("Solicitar");
+        gridPanes[1].add(buttonPedido, 0, 5);
+
+        buttonPedido.setOnAction(((event) -> {
+            //codigo Pedido
+            System.out.println("Pedido");
+
+        }));
         gridPanes[0].add(seleccionCaja, 1, 6, 1, 1);
         GridPane.setHalignment(seleccionCaja, HPos.CENTER);
         Button buttonAlmacenar = new Button("Almacenar");
         gridPanes[0].add(buttonAlmacenar, 0, 9, 2, 1);
         GridPane.setHalignment(buttonAlmacenar, HPos.CENTER);
         buttonAlmacenar.setOnAction(((event) -> {
-
+            valuesSpinner.clear();
+            for (int i = 0; i < 20; i++) {
+                if (!GUI.compania.getEstantes()[i].isLleno()) {
+                    valuesSpinner.add(i + 1);
+                }
+            }
             Producto producto = new Producto(nombreProducto.getText(), Double.parseDouble(precioProducto.getText()));
+            GUI.compania.setProducto(producto, seleccionCaja.getValue(), seleccionEstantes.getValue());
             Thread thread = new Thread(GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre() - 1]);
             thread.start();
-
-            //codigo Almacenar
-            System.out.println("Almacenar");
             //Actualizar Spinner Estantes
+            
 
         }));
 

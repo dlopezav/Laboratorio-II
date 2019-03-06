@@ -5,12 +5,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 /**
- * @author Jorge Aurelio Morales
- * @author Ricardo Andres Clavo
- * @author Julio Enrique Aguilera
- * @author Jhon Sebastian Rojas
- * @author Julio Andres Rodriguez 
- * @since 23/09/2018
+ * 
  * @version 1.0
  */
 public class Tienda {

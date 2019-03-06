@@ -151,13 +151,13 @@ public class Bodega {
         this.estantes[i]=e;
     }
     
-    public void setProducto(Producto p){
-        for (int i = 0; i < 20; i++) {
-            if(this.estantes[i]==null){
-                this.estantes[i].setProducto(p);
-                return;
-            }
+    public void setProducto(Producto p, int caja, int estante){
+        
+        for(int i=0;i<7;i++){
+            if(this.estantes[estante-1].getCajas()[caja-1].getProductosGuardados()[i]==null){
+                this.estantes[estante-1].getCajas()[caja-1].getProductosGuardados()[i]=p;
+                break;
+            }        
         }
     }
-  
 }

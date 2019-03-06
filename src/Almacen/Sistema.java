@@ -95,39 +95,12 @@ public class Sistema {
         }
         return 0;
     }
+   
     
-    public int[] tiposProductos(Producto[] productos){
-        int[] tipos = new int[productos.length];
-        for (int i = 0; i < tipos.length; i++) {
-            tipos[i] = productos[i].getTipo();
-        }
-        return tipos;
+    public void almacenarProductos(Producto producto, int estante, int caja){
+        this.estantesBodega[estante+1].getCajas()[caja+1].setProducto(producto);
     }
     
-    public boolean almacenarProductos(Producto[] productos){
-        int[] tipos = tiposProductos(productos);
-        int aux;
-        int posR;
-        boolean flag = false;
-        Estante estanteAsignado;
-        for (Estante estantesBodega1 : this.estantesBodega) {
-            aux = estantesBodega1.getNumero();
-            for (int j = 0; j < tipos.length; j++) {
-                if (aux == tipos[j] && hayEspacio(estantesBodega1)) {
-                    this.estantesBodega[tipos[j]].setProducto(productos[j]);
-                    estanteAsignado = this.estantesBodega[aux-1];
-                    posR = robotLibre();
-                    this.setEstadoRobot(true, posR);
-                    this.robots[posR].setEstanteAsignado(estanteAsignado);
-                    //this.robots[posR].transportarEstante(estanteAsignado.getNumero());
-                    this.robots[posR].volverAParquedero(estanteAsignado.getNumero());
-                    flag = true;
-                    break;
-                }
-            }
-        }
-        return flag;
-    }
     
     public boolean empacarPedido(Pedido pedido, int a){
         

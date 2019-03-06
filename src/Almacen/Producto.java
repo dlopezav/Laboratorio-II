@@ -8,8 +8,6 @@ package Almacen;
 public class Producto {
     private String descripcion;
     private double costo;
-    private int tipo;
-    private int[] posicion;
 
     public Producto(String descripcion, double costo) {
         this.descripcion = descripcion;
@@ -32,19 +30,5 @@ public class Producto {
         this.costo = costo;
     }
 
-    public int getTipo() {
-        return tipo;
-    }
     
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
-    }
-    
-    public int[] getPosicion() {
-        return posicion;
-    }
-
-    public void setPosicion(int[] posicion) {
-        this.posicion = posicion;
-    }
 }

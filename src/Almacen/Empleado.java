@@ -62,9 +62,6 @@ public class Empleado {
         this.computador = computador;
     }
 
-    public boolean guardarProductos(Producto[] productos) {
-        return this.computador.getSistema().almacenarProductos(productos);
-    }
 
     public boolean empacarPedido(Pedido pedido, int a) {
         this.robot.move();
