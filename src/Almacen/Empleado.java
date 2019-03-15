@@ -74,7 +74,7 @@ public class Empleado {
         return this.computador.getSistema().empacarPedido(pedido, a);
     }
 
-    public boolean ponerProducto(Producto producto) throws InterruptedException {
+    public boolean ponerProducto() throws InterruptedException {
         this.robot.move();
         this.robot.pickThing();
         while (this.robot.getDirection() != Direction.SOUTH) {

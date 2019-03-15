@@ -67,11 +67,11 @@ public class RobotOrganizador implements Runnable {
     }
 
     public void transportarEstante(int num) throws InterruptedException {
+        this.ocupado = true;
         while(this.estanteAsignado.getEstado()){
             Thread.sleep(1);
         }
         this.estanteAsignado.setEstado(true);
-        this.ocupado = true;
         int r = this.codigo;
         int x = 0;
         int y = 0;
@@ -327,7 +327,7 @@ public class RobotOrganizador implements Runnable {
     public void run() {
         try {
             this.transportarEstante(this.estanteAsignado.getNumero());
-            this.empleado.ponerProducto(new Producto("", 0.0));
+            this.empleado.ponerProducto();
             this.volverAParquedero(this.estanteAsignado.getNumero());
         } catch (InterruptedException ex) {
 
