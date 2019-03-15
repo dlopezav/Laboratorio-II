@@ -195,9 +195,6 @@ public class GUI extends Application implements Runnable {
         Spinner productos = new Spinner();
         gridPanes[1].add(productos, 1, 3);
 
-        gridPanes[1].add(new Label("Cantidad:"), 0, 4);
-        Spinner cantidad = new Spinner();
-        gridPanes[1].add(cantidad, 1, 4);
 
         Button buttonPedido = new Button("Solicitar");
         gridPanes[1].add(buttonPedido, 0, 5);
