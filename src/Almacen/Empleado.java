@@ -63,17 +63,6 @@ public class Empleado {
     }
 
 
-    public boolean empacarPedido(Pedido pedido, int a) {
-        this.robot.move();
-        this.robot.putThing();
-        this.robot.turnLeft();
-        this.robot.turnLeft();
-        this.robot.move();
-        this.robot.turnLeft();
-        this.robot.turnLeft();
-        return this.computador.getSistema().empacarPedido(pedido, a);
-    }
-
     public boolean ponerProducto() throws InterruptedException {
         this.robot.move();
         this.robot.pickThing();
