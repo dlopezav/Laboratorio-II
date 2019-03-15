@@ -318,8 +318,10 @@ public class GUI extends Application implements Runnable {
 
         
       
-        
-        
+        Label nombreCliente = new Label("Ingrese cliente:");
+        TextField espacioNombre = new TextField();
+        gridPanes[1].add(nombreCliente, 0, 4);
+        gridPanes[1].add(espacioNombre, 1, 4);
         
         gridPanes[0].add(seleccionCaja, 1, 6, 1, 1);
         GridPane.setHalignment(seleccionCaja, HPos.CENTER);
@@ -402,8 +404,11 @@ public class GUI extends Application implements Runnable {
             //Actualizar Spinner Cajas
         });
         Label lProducto = new Label("Producto del Pedido: ");
-        Label lTotal = new Label("Total Precio");
+        Label lTotal = new Label("Total Precio:");
+        Label Cliente = new Label("Cliente:");
         TextField lNombreProducto = new TextField();
+        TextField lNombreCliente = new TextField();
+        lNombreCliente.setDisable(true);
         lNombreProducto.setDisable(true);
         TextField lTotalNumero = new TextField();
         lTotalNumero.setDisable(true);
@@ -413,12 +418,13 @@ public class GUI extends Application implements Runnable {
         gridPanes[2].add(lTotal, 0, 2);
         gridPanes[2].add(lNombreProducto, 1, 1);
         gridPanes[2].add(lTotalNumero, 1, 2);
-        
+        gridPanes[2].add(Cliente, 0, 3);
+         gridPanes[2].add(lNombreCliente, 1, 3);
         ///BOTON FACTURA////////////////////////////////////////////////////
         buttonPedido.setOnAction(((event) -> {
         lNombreProducto.setText(productos.getValue());
         lTotalNumero.setText(precioProducto.getText());
-            
+        lNombreCliente.setText(espacioNombre.getText());
             
             
         }));
