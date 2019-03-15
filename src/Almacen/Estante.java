@@ -68,6 +68,15 @@ public class Estante {
         return true;
     }
 
+    public boolean tieneProducto() {
+        for (Caja a : cajas) {
+            if (a.tieneProducto()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public boolean getEstado() {
         return this.estado;
     }

@@ -46,4 +46,13 @@ public class Caja {
         }
         return true;
     }
+    
+    public boolean tieneProducto(){
+        for (Producto p : productosGuardados) {
+            if (p != null) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
