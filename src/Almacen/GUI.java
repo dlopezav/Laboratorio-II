@@ -230,6 +230,14 @@ public class GUI extends Application implements Runnable {
 
             Producto producto = new Producto(nombreProducto.getText(), Double.parseDouble(precioProducto.getText()));
             compania.setProducto(producto, seleccionCaja.getValue(), seleccionEstantes.getValue());
+            for(RobotOrganizador r: GUI.compania.getRobotsOrganizadores()){
+                
+            }
+            
+            
+            GUI.compania.getSistema().getRobots()[GUI.compania.getSistema().robotLibre() - 1].setEstanteAsignado(GUI.compania.getEstantes()[seleccionEstantes.getValue()-1]);
+            Thread thread = new Thread(GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre() - 1]);
+            thread.start();
             valuesSpinner.clear();
             for (int i = 0; i < 20; i++) {
                 if (!GUI.compania.getEstantes()[i].isLleno()) {
@@ -251,8 +259,7 @@ public class GUI extends Application implements Runnable {
             }
             sv.setValue(valuesSpinner.get(0));
             sv1.setValue(valuesSpinner1.get(0));
-            Thread thread = new Thread(GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre() - 1]);
-            thread.start();
+            
             //Actualizar Spinner Estantes
 
         }));

@@ -11,6 +11,7 @@ public class Estante {
     private int numero;
     private Caja[] cajas;
     private Thing thing;
+    private boolean estado;
 
     public Estante(int numero, Thing thing) {
         this.numero = numero;
@@ -19,6 +20,7 @@ public class Estante {
             this.cajas[i] = new Caja(i+1);
         }
         this.thing = thing;
+        this.estado = false;
     }
 
     public int getNumero() {
@@ -64,6 +66,14 @@ public class Estante {
             }
         }
         return true;
+    }
+
+    public boolean getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(boolean estado){
+        this.estado = estado;
     }
 
 }

@@ -67,6 +67,10 @@ public class RobotOrganizador implements Runnable {
     }
 
     public void transportarEstante(int num) throws InterruptedException {
+        while(this.estanteAsignado.getEstado()){
+            Thread.sleep(1);
+        }
+        this.estanteAsignado.setEstado(true);
         this.ocupado = true;
         int r = this.codigo;
         int x = 0;
@@ -159,7 +163,10 @@ public class RobotOrganizador implements Runnable {
             }
             this.robot.move();
         }
+        
         this.robot.putThing();
+        
+        
         this.empleado.setOcupado(true);
 
         this.robot.turnLeft();
@@ -175,7 +182,8 @@ public class RobotOrganizador implements Runnable {
         this.ocupado = false;
     }
 
-    public void volverAParquedero(int num) {
+    public void volverAParquedero(int num) throws InterruptedException {
+        this.ocupado = true;
         int r = this.codigo;
         int x = 0;
         int y = 0;
@@ -205,14 +213,14 @@ public class RobotOrganizador implements Runnable {
                 break;
         }
         while (!this.FrenteLimpio()) {
-            Thread.yield();
+            Thread.sleep(1);
         }
         this.robot.move();
         if (this.robot.canPickThing()) {
             this.robot.pickThing();
         }
         while (!this.FrenteLimpio()) {
-            Thread.yield();
+            Thread.sleep(1);
         }
         this.robot.move();
         while (this.robot.getDirection() != Direction.NORTH) {
@@ -220,7 +228,7 @@ public class RobotOrganizador implements Runnable {
         }
         while (this.robot.getStreet() != y) {
             while (!this.FrenteLimpio()) {
-                Thread.yield();
+                Thread.sleep(1);
             }
             this.robot.move();
         }
@@ -229,7 +237,7 @@ public class RobotOrganizador implements Runnable {
         }
         while (this.robot.getAvenue() != x) {
             while (!this.FrenteLimpio()) {
-                Thread.yield();
+                Thread.sleep(1);
             }
             this.robot.move();
         }
@@ -239,7 +247,7 @@ public class RobotOrganizador implements Runnable {
         }
         while (this.robot.getStreet() != 2) {
             while (!this.FrenteLimpio()) {
-                Thread.yield();
+                Thread.sleep(1);
             }
             this.robot.move();
         }
@@ -250,17 +258,20 @@ public class RobotOrganizador implements Runnable {
             }
             while (this.robot.getAvenue() != r) {
                 while (!this.FrenteLimpio()) {
-                    Thread.yield();
+                    Thread.sleep(1);
                 }
                 this.robot.move();
             }
-            this.robot.turnLeft();
+            
+           while (this.robot.getDirection() != Direction.NORTH) {
+                this.robot.turnLeft();
+            }
             while (!this.FrenteLimpio()) {
-                Thread.yield();
+                Thread.sleep(1);
             }
             this.robot.move();
             while (!this.FrenteLimpio()) {
-                Thread.yield();
+                Thread.sleep(1);
             }
             this.robot.move();
             while (this.robot.getDirection() != Direction.NORTH) {
@@ -272,17 +283,17 @@ public class RobotOrganizador implements Runnable {
             }
             while (this.robot.getAvenue() != r) {
                 while (!this.FrenteLimpio()) {
-                    Thread.yield();
+                    Thread.sleep(1);
                 }
                 this.robot.move();
             }
             this.robot.turnLeft();
             while (!this.FrenteLimpio()) {
-                Thread.yield();
+                Thread.sleep(1);
             }
             this.robot.move();
             while (!this.FrenteLimpio()) {
-                Thread.yield();
+                Thread.sleep(1);
             }
             this.robot.move();
             while (this.robot.getDirection() != Direction.NORTH) {
@@ -290,8 +301,9 @@ public class RobotOrganizador implements Runnable {
             }
         } else if (r == x) {
             while (this.robot.getStreet() != 0) {
+                
                 while (!this.FrenteLimpio()) {
-                    Thread.yield();
+                    Thread.sleep(1);
                 }
                 this.robot.move();
             }
@@ -299,6 +311,8 @@ public class RobotOrganizador implements Runnable {
         while (this.robot.getDirection() != Direction.SOUTH) {
             this.robot.turnLeft();
         }
+        this.ocupado = false;
+        this.estanteAsignado.setEstado(false);
     }
 
     public Boolean getOcupado() {
@@ -312,9 +326,9 @@ public class RobotOrganizador implements Runnable {
     @Override
     public void run() {
         try {
-            this.transportarEstante(this.codigo);
+            this.transportarEstante(this.estanteAsignado.getNumero());
             this.empleado.ponerProducto(new Producto("", 0.0));
-            this.volverAParquedero(this.codigo);
+            this.volverAParquedero(this.estanteAsignado.getNumero());
         } catch (InterruptedException ex) {
 
         }
@@ -368,7 +382,7 @@ public class RobotOrganizador implements Runnable {
                     }
                 }
             }
-            if (this.robot.getAvenue() == 10 && this.robot.getStreet() == 7 && this.empleado.isOcupado()) {
+            if (this.robot.getAvenue() == 10 && this.robot.getStreet() == 7 && this.empleado.isOcupado() && this.robot.getDirection()==Direction.SOUTH) {
                 return false;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
