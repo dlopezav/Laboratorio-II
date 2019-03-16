@@ -2,6 +2,7 @@ package Almacen;
 
 import becker.robots.Direction;
 import becker.robots.Robot;
+import becker.robots.Thing;
 
 /**
  *
@@ -62,7 +63,6 @@ public class Empleado {
         this.computador = computador;
     }
 
-
     public boolean ponerProducto() throws InterruptedException {
         this.robot.move();
         this.robot.pickThing();
@@ -74,7 +74,6 @@ public class Empleado {
             this.robot.turnLeft();
         }
         this.robot.setLabel("PUTTING");
-        //Falta            
 
         Thread.sleep((long) (1000 / this.robot.getSpeed()));
         this.robot.setLabel("");
@@ -88,6 +87,48 @@ public class Empleado {
             this.robot.turnLeft();
         }
 
+        this.setOcupado(false);
+        return true;
+    }
+
+    public boolean TomarProductos() throws InterruptedException {
+        this.robot.move();
+        this.robot.pickThing();
+        while (this.robot.getDirection() != Direction.SOUTH) {
+            this.robot.turnLeft();
+        }
+        this.robot.move();
+        while (this.robot.getDirection() != Direction.NORTH) {
+            this.robot.turnLeft();
+        }
+        this.robot.setLabel("GIVE");
+
+        Thread.sleep((long) (1000 / this.robot.getSpeed()));
+        this.robot.setLabel("");
+        this.robot.move();
+        this.robot.putThing();
+        while (this.robot.getDirection() != Direction.SOUTH) {
+            this.robot.turnLeft();
+        }
+        this.robot.move();
+        while (this.robot.getDirection() != Direction.NORTH) {
+            this.robot.turnLeft();
+        }
+
+        this.setOcupado(false);
+        return true;
+    }
+    
+    public boolean DejarPedido() throws InterruptedException {
+        this.robot.move();
+        this.robot.putThing();
+        while (this.robot.getDirection() != Direction.SOUTH) {
+            this.robot.turnLeft();
+        }
+        this.robot.move();
+        while (this.robot.getDirection() != Direction.NORTH) {
+            this.robot.turnLeft();
+        }
         this.setOcupado(false);
         return true;
     }

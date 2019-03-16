@@ -16,6 +16,7 @@ public class RobotOrganizador implements Runnable {
     private RobotOrganizador[] robots;
     private boolean suspender;
     private final Empleado empleado;
+    private String action;
 
     public RobotOrganizador(int codigo, Robot robot, Empleado empleado, RobotOrganizador[] robots) {
         this.codigo = codigo;
@@ -24,12 +25,21 @@ public class RobotOrganizador implements Runnable {
         this.suspender = false;
         this.empleado = empleado;
         this.robots = robots;
+        this.action = "";
     }
 
-    public boolean isOcupado(){
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public boolean isOcupado() {
         return this.ocupado;
     }
-    
+
     public boolean isSuspender() {
         return suspender;
     }
@@ -68,7 +78,7 @@ public class RobotOrganizador implements Runnable {
 
     public void transportarEstante(int num) throws InterruptedException {
         this.ocupado = true;
-        while(this.estanteAsignado.getEstado()){
+        while (this.estanteAsignado.getEstado()) {
             Thread.sleep(1);
         }
         this.estanteAsignado.setEstado(true);
@@ -163,10 +173,9 @@ public class RobotOrganizador implements Runnable {
             }
             this.robot.move();
         }
-        
+
         this.robot.putThing();
-        
-        
+
         this.empleado.setOcupado(true);
 
         this.robot.turnLeft();
@@ -262,8 +271,8 @@ public class RobotOrganizador implements Runnable {
                 }
                 this.robot.move();
             }
-            
-           while (this.robot.getDirection() != Direction.NORTH) {
+
+            while (this.robot.getDirection() != Direction.NORTH) {
                 this.robot.turnLeft();
             }
             while (!this.FrenteLimpio()) {
@@ -301,7 +310,7 @@ public class RobotOrganizador implements Runnable {
             }
         } else if (r == x) {
             while (this.robot.getStreet() != 0) {
-                
+
                 while (!this.FrenteLimpio()) {
                     Thread.sleep(1);
                 }
@@ -325,13 +334,30 @@ public class RobotOrganizador implements Runnable {
 
     @Override
     public void run() {
-        try {
-            this.transportarEstante(this.estanteAsignado.getNumero());
-            this.empleado.ponerProducto();
-            this.volverAParquedero(this.estanteAsignado.getNumero());
-        } catch (InterruptedException ex) {
 
+        switch (this.action) {
+            case "LlevarEstante":
+                try {
+                    this.transportarEstante(this.estanteAsignado.getNumero());
+                    this.empleado.ponerProducto();
+                    this.volverAParquedero(this.estanteAsignado.getNumero());
+                } catch (InterruptedException ex) {
+
+                }
+                break;
+            case "LlevarEstanteProducto":
+                try {
+                    this.transportarEstante(this.estanteAsignado.getNumero());
+                    this.empleado.TomarProductos();
+                    this.volverAParquedero(this.estanteAsignado.getNumero());
+                    this.empleado.DejarPedido();
+                    this.LlevarPredido();
+                } catch (InterruptedException ex) {
+
+                }
+                break;
         }
+
     }
 
     public boolean FrenteLimpio() {
@@ -382,7 +408,7 @@ public class RobotOrganizador implements Runnable {
                     }
                 }
             }
-            if (this.robot.getAvenue() == 10 && this.robot.getStreet() == 7 && this.empleado.isOcupado() && this.robot.getDirection()==Direction.SOUTH) {
+            if (this.robot.getAvenue() == 10 && this.robot.getStreet() == 7 && this.empleado.isOcupado() && this.robot.getDirection() == Direction.SOUTH) {
                 return false;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -390,4 +416,182 @@ public class RobotOrganizador implements Runnable {
         }
         return true;
     }
+
+    public void LlevarPredido() throws InterruptedException {
+        this.ocupado = true;
+        int r = this.codigo;
+
+        while (!this.FrenteLimpio()) {
+            Thread.yield();
+        }
+        this.robot.move();
+
+        while (this.robot.getDirection() != Direction.EAST) {
+            this.robot.turnLeft();
+        }
+        while (this.robot.getAvenue() != 10) {
+            while (!this.FrenteLimpio()) {
+                Thread.yield();
+            }
+
+            this.robot.move();
+        }
+
+        while (this.robot.getDirection() != Direction.SOUTH) {
+            this.robot.turnLeft();
+        }
+
+        while (this.robot.getStreet() != 8) {
+            while (!this.FrenteLimpio()) {
+                Thread.yield();
+            }
+            this.robot.move();
+        }
+
+        if (this.robot.canPickThing()) {
+            this.robot.pickThing();
+        }
+
+        while (this.robot.getDirection() != Direction.EAST) {
+            this.robot.turnLeft();
+        }
+
+        while (this.robot.getAvenue() != 11) {
+            while (!this.FrenteLimpio()) {
+                Thread.sleep(1);
+            }
+            this.robot.move();
+        }
+
+        while (this.robot.getDirection() != Direction.NORTH) {
+            this.robot.turnLeft();
+        }
+
+        while (this.robot.getStreet() != 7) {
+            while (!this.FrenteLimpio()) {
+                Thread.yield();
+            }
+            this.robot.move();
+        }
+
+        while (this.robot.getDirection() != Direction.EAST) {
+            this.robot.turnLeft();
+        }
+
+        while (!this.FrenteLimpio()) {
+            Thread.yield();
+        }
+        this.robot.move();
+
+        if (!this.robot.canPickThing()) {
+            this.robot.putThing();
+        } else {
+            while (this.robot.getDirection() != Direction.NORTH) {
+                this.robot.turnLeft();
+            }
+            while (!this.FrenteLimpio()) {
+                Thread.yield();
+            }
+            this.robot.move();
+
+            if (!this.robot.canPickThing()) {
+                this.robot.putThing();
+            } else {
+                while (this.robot.getDirection() != Direction.NORTH) {
+                    this.robot.turnLeft();
+                }
+                while (!this.FrenteLimpio()) {
+                    Thread.yield();
+                }
+                this.robot.move();
+
+                if (!this.robot.canPickThing()) {
+                    this.robot.putThing();
+                } else {
+                    while (this.robot.getDirection() != Direction.NORTH) {
+                        this.robot.turnLeft();
+                    }
+                    while (!this.FrenteLimpio()) {
+                        Thread.yield();
+                    }
+                    this.robot.move();
+
+                    if (!this.robot.canPickThing()) {
+                        this.robot.putThing();
+                    } else {
+                        while (this.robot.getDirection() != Direction.NORTH) {
+                            this.robot.turnLeft();
+                        }
+                        while (!this.FrenteLimpio()) {
+                            Thread.yield();
+                        }
+                        this.robot.move();
+
+                        if (!this.robot.canPickThing()) {
+                            this.robot.putThing();
+                        }
+                    }
+                }
+            }
+
+        }
+
+        while (this.robot.getDirection() != Direction.SOUTH) {
+            this.robot.turnLeft();
+        }
+
+        while (this.robot.frontIsClear()) {
+            this.robot.move();
+        }
+
+        while (this.robot.getDirection() != Direction.WEST) {
+            this.robot.turnLeft();
+        }
+
+        while (!this.FrenteLimpio()) {
+            Thread.yield();
+        }
+        this.robot.move();
+        while (!this.FrenteLimpio()) {
+            Thread.yield();
+        }
+        this.robot.move();
+
+        while (this.robot.getDirection() != Direction.NORTH) {
+            this.robot.turnLeft();
+        }
+
+        while (this.robot.getStreet() != 2) {
+            this.robot.move();
+        }
+
+        while (this.robot.getDirection() != Direction.WEST) {
+            this.robot.turnLeft();
+        }
+
+        while (this.robot.getAvenue() != this.codigo) {
+            while (!this.FrenteLimpio()) {
+                Thread.yield();
+            }
+            this.robot.move();
+        }
+
+        while (this.robot.getDirection() != Direction.NORTH) {
+            this.robot.turnLeft();
+        }
+
+        while (this.robot.getStreet() != 0) {
+            while (!this.FrenteLimpio()) {
+                Thread.yield();
+            }
+            this.robot.move();
+        }
+
+        while (this.robot.getDirection() != Direction.SOUTH) {
+            this.robot.turnLeft();
+        }
+
+        this.ocupado = false;
+    }
+
 }

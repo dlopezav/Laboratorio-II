@@ -101,10 +101,14 @@ public class GUI extends Application implements Runnable {
                 Integer newInt = valuesSpinner.get(newidx);
                 this.setValue(newInt);
                 valuesSpinner1.clear();
-                for (int i = 0; i < 3; i++) {
-                    if (!GUI.compania.getEstantes()[seleccionEstantes.getValue() - 1].getCajas()[i].isLleno()) {
-                        valuesSpinner1.add(i + 1);
+                try {
+                    for (int i = 0; i < 3; i++) {
+                        if (!GUI.compania.getEstantes()[seleccionEstantes.getValue() - 1].getCajas()[i].isLleno()) {
+                            valuesSpinner1.add(i + 1);
+                        }
                     }
+                } catch (Exception ex) {
+
                 }
             }
 
@@ -116,10 +120,14 @@ public class GUI extends Application implements Runnable {
                 Integer newInt = valuesSpinner.get(newidx);
                 this.setValue(newInt);
                 valuesSpinner1.clear();
-                for (int i = 0; i < 3; i++) {
-                    if (!GUI.compania.getEstantes()[seleccionEstantes.getValue() - 1].getCajas()[i].isLleno()) {
-                        valuesSpinner1.add(i + 1);
+                try {
+                    for (int i = 0; i < 3; i++) {
+                        if (!GUI.compania.getEstantes()[seleccionEstantes.getValue() - 1].getCajas()[i].isLleno()) {
+                            valuesSpinner1.add(i + 1);
+                        }
                     }
+                } catch (Exception ex) {
+
                 }
             }
         };
@@ -160,45 +168,45 @@ public class GUI extends Application implements Runnable {
         gridPanes[1].add(new Label("Producto:"), 0, 3);
         Spinner<String> productos = new Spinner();
         gridPanes[1].add(productos, 1, 3);
-        List <String> valueSpinne3 = new ArrayList<>();
-            for (int i = 1; i <= 7; i++) {
+        List<String> valueSpinne3 = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
             valueSpinne3.add("-");
         }
-            SpinnerValueFactory<String> s3 = new SpinnerValueFactory<String>() {
+        SpinnerValueFactory<String> s3 = new SpinnerValueFactory<String>() {
             @Override
             public void decrement(int steps) {
                 String current = this.getValue();
-                try{
-                int dx = valueSpinne3.indexOf(current);
-                int newidx = (valueSpinne3.size() + dx - steps) % valueSpinne3.size();
-                String a = valueSpinne3.get(newidx);
-                this.setValue(a);
-                }catch(Exception e){
-                    
+                try {
+                    int dx = valueSpinne3.indexOf(current);
+                    int newidx = (valueSpinne3.size() + dx - steps) % valueSpinne3.size();
+                    String a = valueSpinne3.get(newidx);
+                    this.setValue(a);
+                } catch (Exception e) {
+
                 }
-                
+
             }
 
             @Override
             public void increment(int steps) {
                 String current = this.getValue();
-                try{
-                int dx = valueSpinne3.indexOf(current);
-                int newidx = (dx + steps) % valueSpinne3.size();
-                String newString = valueSpinne3.get(newidx);
-                this.setValue(newString);
-                }catch(Exception e){
-                    
+                try {
+                    int dx = valueSpinne3.indexOf(current);
+                    int newidx = (dx + steps) % valueSpinne3.size();
+                    String newString = valueSpinne3.get(newidx);
+                    this.setValue(newString);
+                } catch (Exception e) {
+
                 }
             }
         };
         productos.setValueFactory(s3);
-        
+
         gridPanes[1].add(new Label("Caja:"), 0, 2);
         Spinner cajas = new Spinner();
         gridPanes[1].add(cajas, 1, 2);
-        List <Integer> valueSpinne1 = new ArrayList<>();
-        List <Integer> valueSpinne2 = new ArrayList<>();
+        List<Integer> valueSpinne1 = new ArrayList<>();
+        List<Integer> valueSpinne2 = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
             valueSpinne2.add(i);
         }
@@ -206,21 +214,25 @@ public class GUI extends Application implements Runnable {
             @Override
             public void decrement(int steps) {
                 Integer current = this.getValue();
-                try{
-                int dx = valueSpinne2.indexOf(current);
-                int newidx = (valueSpinne2.size() + dx - steps) % valueSpinne2.size();
-                Integer newInt = valueSpinne2.get(newidx);
-                this.setValue(newInt);
-                valueSpinne3.clear();
-                for (int i = 0; i < 7; i++) {
-                if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int)cajas.getValue()-1].getProductosGuardados()[i]!=null) {
-                        valueSpinne3.add(GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int)cajas.getValue()-1].getProductosGuardados()[i].getDescripcion());
-                 
-                }
-            }
-                s3.setValue(valueSpinne3.get(0));
-                }catch(Exception e){
-                    
+                try {
+                    int dx = valueSpinne2.indexOf(current);
+                    int newidx = (valueSpinne2.size() + dx - steps) % valueSpinne2.size();
+                    Integer newInt = valueSpinne2.get(newidx);
+                    this.setValue(newInt);
+                    valueSpinne3.clear();
+                    try {
+                        for (int i = 0; i < 7; i++) {
+                            if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int) cajas.getValue() - 1].getProductosGuardados()[i] != null) {
+                                valueSpinne3.add(GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int) cajas.getValue() - 1].getProductosGuardados()[i].getDescripcion());
+
+                            }
+                        }
+                    } catch (Exception ex) {
+
+                    }
+                    s3.setValue(valueSpinne3.get(0));
+                } catch (Exception e) {
+
                 }
             }
 
@@ -228,32 +240,34 @@ public class GUI extends Application implements Runnable {
             public void increment(int steps) {
                 Integer current = this.getValue();
                 int dx = valueSpinne2.indexOf(current);
-                try{
-                int newidx = (dx + steps) % valueSpinne2.size();
-                Integer newInt = valueSpinne2.get(newidx);
-                this.setValue(newInt);
-                valueSpinne3.clear();
-                for (int i = 0; i < 7; i++) {
-                if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int)cajas.getValue()-1].getProductosGuardados()[i]!=null) {
-                        valueSpinne3.add(GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int)cajas.getValue()-1].getProductosGuardados()[i].getDescripcion());
-                 
+                try {
+                    int newidx = (dx + steps) % valueSpinne2.size();
+                    Integer newInt = valueSpinne2.get(newidx);
+                    this.setValue(newInt);
+                    valueSpinne3.clear();
+                    try {
+                        for (int i = 0; i < 7; i++) {
+                            if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int) cajas.getValue() - 1].getProductosGuardados()[i] != null) {
+                                valueSpinne3.add(GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int) cajas.getValue() - 1].getProductosGuardados()[i].getDescripcion());
+
+                            }
+                        }
+                    } catch (Exception ex) {
+
+                    }
+                    s3.setValue(valueSpinne3.get(0));
+                } catch (Exception e) {
+
                 }
-            }
-                s3.setValue(valueSpinne3.get(0));
-                }catch(Exception e){
-                    
-                }
-                
+
             }
         };
         cajas.setValueFactory(s2);
-        
-        
+
         gridPanes[1].add(new Label("Estante:"), 0, 1);
-        
+
         gridPanes[1].add(estantes, 1, 1);
-        
-        
+
         for (int i = 1; i <= 20; i++) {
             valueSpinne1.add(i);
         }
@@ -262,23 +276,23 @@ public class GUI extends Application implements Runnable {
             public void decrement(int steps) {
                 Integer current = this.getValue();
                 int dx = valueSpinne1.indexOf(current);
-                try{
-                int newidx = (valueSpinne1.size() + dx - steps) % valueSpinne1.size();
-                Integer newInt = valueSpinne1.get(newidx);
-                this.setValue(newInt);
-                }catch(Exception e){
-                    
+                try {
+                    int newidx = (valueSpinne1.size() + dx - steps) % valueSpinne1.size();
+                    Integer newInt = valueSpinne1.get(newidx);
+                    this.setValue(newInt);
+                } catch (Exception e) {
+
                 }
                 valueSpinne2.clear();
-                try{
-                for (int i = 0; i < 3; i++) {
-                    if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[i].tieneProducto()) {
-                        valueSpinne2.add(i + 1);
+                try {
+                    for (int i = 0; i < 3; i++) {
+                        if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[i].tieneProducto()) {
+                            valueSpinne2.add(i + 1);
+                        }
                     }
-                }
-                s2.setValue(valueSpinne2.get(0));
-                }catch(Exception e){
-                    
+                    s2.setValue(valueSpinne2.get(0));
+                } catch (Exception e) {
+
                 }
             }
 
@@ -286,117 +300,111 @@ public class GUI extends Application implements Runnable {
             public void increment(int steps) {
                 Integer current = this.getValue();
                 int dx = valueSpinne1.indexOf(current);
-                try{
-                int newidx = (dx + steps) % valueSpinne1.size();
-                Integer newInt = valueSpinne1.get(newidx);
-                this.setValue(newInt);
-                }catch(Exception e){
-                    
+                try {
+                    int newidx = (dx + steps) % valueSpinne1.size();
+                    Integer newInt = valueSpinne1.get(newidx);
+                    this.setValue(newInt);
+                } catch (Exception e) {
+
                 }
                 valueSpinne2.clear();
-                try{
-                for (int i = 0; i < 3; i++) {
-                    if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[i].tieneProducto()) {
-                        valueSpinne2.add(i + 1);
+                try {
+                    for (int i = 0; i < 3; i++) {
+                        if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[i].tieneProducto()) {
+                            valueSpinne2.add(i + 1);
+                        }
                     }
-                }
-                s2.setValue(valueSpinne2.get(0));
-                }catch(Exception e){
-                    
+                    s2.setValue(valueSpinne2.get(0));
+                } catch (Exception e) {
+
                 }
             }
         };
         estantes.setValueFactory(s1);
-        
-        
-        
-        
-        
-      
+
         Button buttonPedido = new Button("Solicitar");
         gridPanes[1].add(buttonPedido, 0, 5);
 
-        
-      
         Label nombreCliente = new Label("Ingrese cliente:");
         TextField espacioNombre = new TextField();
         gridPanes[1].add(nombreCliente, 0, 4);
         gridPanes[1].add(espacioNombre, 1, 4);
-        
+
         gridPanes[0].add(seleccionCaja, 1, 6, 1, 1);
         GridPane.setHalignment(seleccionCaja, HPos.CENTER);
         Button buttonAlmacenar = new Button("Almacenar");
         gridPanes[0].add(buttonAlmacenar, 0, 9, 2, 1);
         GridPane.setHalignment(buttonAlmacenar, HPos.CENTER);
-        
-        
+
         ////////BOTON ALMACENAR////////
         buttonAlmacenar.setOnAction(((event) -> {
 
-            Producto producto = new Producto(nombreProducto.getText(), Double.parseDouble(precioProducto.getText()));
-            compania.setProducto(producto, seleccionCaja.getValue(), seleccionEstantes.getValue());
-            
-            
-            
-            GUI.compania.getSistema().getRobots()[GUI.compania.getSistema().robotLibre()-1].setEstanteAsignado(GUI.compania.getEstantes()[seleccionEstantes.getValue()-1]);
-            Thread thread = new Thread(GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre() - 1]);
-            thread.start();
-            valuesSpinner.clear();
-            for (int i = 0; i < 20; i++) {
-                if (!GUI.compania.getEstantes()[i].isLleno()) {
-                    valuesSpinner.add(i + 1);
-                }
-            }
-            sv.setValue(valuesSpinner.get(0));
-            valuesSpinner1.clear();
-            for (int i = 0; i < 3; i++) {
-                if (!GUI.compania.getEstantes()[seleccionEstantes.getValue() - 1].getCajas()[i].isLleno()) {
-                    valuesSpinner1.add(i + 1);
-                }
-            }
-            valueSpinne1.clear();
-            try{
-            for (int i = 0; i < 20; i++) {
-                if (GUI.compania.getEstantes()[i].tieneProducto()) {
-                    valueSpinne1.add(i + 1);
-                }
-            }
-            }catch(Exception e){
-                
-            }
-            
-            valueSpinne2.clear();
-            try{
-            for (int i = 0; i < 3; i++) {
-                    if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[i].tieneProducto()) {
-                        valueSpinne2.add(i + 1);
+            try {
+                Producto producto = new Producto(nombreProducto.getText(), Double.parseDouble(precioProducto.getText()));
+                compania.setProducto(producto, seleccionCaja.getValue(), seleccionEstantes.getValue());
+
+                GUI.compania.getSistema().getRobots()[GUI.compania.getSistema().robotLibre() - 1].setEstanteAsignado(GUI.compania.getEstantes()[seleccionEstantes.getValue() - 1]);
+                GUI.compania.getSistema().getRobots()[GUI.compania.getSistema().robotLibre() - 1].setAction("LlevarEstante");
+                Thread thread = new Thread(GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre() - 1]);
+                thread.start();
+                valuesSpinner.clear();
+                for (int i = 0; i < 20; i++) {
+                    if (!GUI.compania.getEstantes()[i].isLleno()) {
+                        valuesSpinner.add(i + 1);
                     }
                 }
-            }catch(Exception e){
-                
-            }
-            valueSpinne3.clear();
-            try{
-            for (int i = 0; i < 7; i++) {
-                if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int)cajas.getValue()-1].getProductosGuardados()[i]!=null) {
-                        valueSpinne3.add(GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int)cajas.getValue()-1].getProductosGuardados()[i].getDescripcion());
-                 
+                sv.setValue(valuesSpinner.get(0));
+                valuesSpinner1.clear();
+                for (int i = 0; i < 3; i++) {
+                    if (!GUI.compania.getEstantes()[seleccionEstantes.getValue() - 1].getCajas()[i].isLleno()) {
+                        valuesSpinner1.add(i + 1);
+                    }
                 }
-            }
-            }catch(Exception e){
-                
-            }
-            sv.setValue(valuesSpinner.get(0));
-            sv1.setValue(valuesSpinner1.get(0));
-            try{
-            s1.setValue(valueSpinne1.get(0));
-            s2.setValue(valueSpinne2.get(0));
-            s3.setValue(valueSpinne3.get(0));
-            }catch(Exception e){
-                
-            }
-            //Actualizar Spinner Estantes
+                valueSpinne1.clear();
+                try {
+                    for (int i = 0; i < 20; i++) {
+                        if (GUI.compania.getEstantes()[i].tieneProducto()) {
+                            valueSpinne1.add(i + 1);
+                        }
+                    }
+                } catch (Exception e) {
 
+                }
+
+                valueSpinne2.clear();
+                try {
+                    for (int i = 0; i < 3; i++) {
+                        if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[i].tieneProducto()) {
+                            valueSpinne2.add(i + 1);
+                        }
+                    }
+                } catch (Exception e) {
+
+                }
+                valueSpinne3.clear();
+                try {
+                    for (int i = 0; i < 7; i++) {
+                        if (GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int) cajas.getValue() - 1].getProductosGuardados()[i] != null) {
+                            valueSpinne3.add(GUI.compania.getEstantes()[estantes.getValue() - 1].getCajas()[(int) cajas.getValue() - 1].getProductosGuardados()[i].getDescripcion());
+
+                        }
+                    }
+                } catch (Exception e) {
+
+                }
+                sv.setValue(valuesSpinner.get(0));
+                sv1.setValue(valuesSpinner1.get(0));
+                try {
+                    s1.setValue(valueSpinne1.get(0));
+                    s2.setValue(valueSpinne2.get(0));
+                    s3.setValue(valueSpinne3.get(0));
+                } catch (Exception e) {
+
+                }
+                //Actualizar Spinner Estantes
+            } catch (Exception ex) {
+
+            }
         }));
 
         seleccionEstantes.valueProperty().addListener((ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) -> {
@@ -419,29 +427,30 @@ public class GUI extends Application implements Runnable {
         gridPanes[2].add(lNombreProducto, 1, 1);
         gridPanes[2].add(lTotalNumero, 1, 2);
         gridPanes[2].add(Cliente, 0, 3);
-         gridPanes[2].add(lNombreCliente, 1, 3);
+        gridPanes[2].add(lNombreCliente, 1, 3);
         ///BOTON FACTURA////////////////////////////////////////////////////
         buttonPedido.setOnAction(((event) -> {
-        lNombreProducto.setText(productos.getValue());
-        lTotalNumero.setText(precioProducto.getText());
-        lNombreCliente.setText(espacioNombre.getText());
-            
-            
+            try {
+                lNombreProducto.setText(productos.getValue());
+                lTotalNumero.setText(precioProducto.getText());
+                lNombreCliente.setText(espacioNombre.getText());
+                for (Producto p : GUI.compania.getEstantes()[(int) (estantes.getValue()) - 1].getCajas()[(int) (cajas.getValue()) - 1].getProductosGuardados()) {
+                    if (productos.getValue().equals(p.getDescripcion())) {
+                        p.setDescripcion("");
+                        p.setCosto(0);
+                        GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre() - 1].setAction("LlevarEstanteProducto");
+                        Thread thread = new Thread(GUI.compania.getRobotsOrganizadores()[GUI.compania.getSistema().robotLibre() - 1]);
+                        thread.start();
+                        
+                        break;
+                    }
+                }
+
+            } catch (Exception ex) {
+
+            }
         }));
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         for (int i = 0; i < 3; i++) {
             tabs[i].setContent(gridPanes[i]);
         }
@@ -462,19 +471,8 @@ public class GUI extends Application implements Runnable {
         System.exit(0);
     }
 
-    @Override
-    public void init() {
-
-    }
-
     public GUI() {
 
     }
 
 }
-
-/*Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction((ActionEvent event) -> {
-            System.out.println("Hello World!");
-        });*/
